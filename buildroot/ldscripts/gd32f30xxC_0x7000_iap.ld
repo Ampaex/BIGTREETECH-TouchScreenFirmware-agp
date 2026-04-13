@@ -9,20 +9,20 @@
 ENTRY(Reset_Handler)
 
 /* Generate a link error if heap and stack don't fit into RAM */
-_Min_Heap_Size = 0x5000;      /* required amount of heap  */
-_Min_Stack_Size = 0x2000; /* required amount of stack */
+_Min_Heap_Size = 0x5000;     /* required amount of heap  */
+_Min_Stack_Size = 0x2000;    /* required amount of stack */
 
 /* Specify the memory areas */
 MEMORY
 {
   FLASH (rx)      : ORIGIN = 0x08007000, LENGTH = 256K - 28K
-  RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 64K
+  RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 96K
   MEMORY_B1 (rx)  : ORIGIN = 0x60000000, LENGTH = 0K
 }
 
 /* Highest address of the user mode stack */
-/* _estack = ALIGN(ORIGIN(RAM) + LENGTH(RAM) - 16 ,8);    /* end of RAM */
-_estack = 0x20010000;    /* end of RAM */
+/* _estack = ALIGN(ORIGIN(RAM) + LENGTH(RAM) - 16, 8);    /* end of RAM */
+_estack = 0x20018000;    /* end of RAM */
 
 /* Define output sections */
 SECTIONS
@@ -53,13 +53,12 @@ SECTIONS
     _etext = .;        /* define a global symbols at end of code */
   } >FLASH
 
-
-   .ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >FLASH
-    .ARM : {
+  .ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >FLASH
+  .ARM : {
     __exidx_start = .;
-      *(.ARM.exidx*)
-      __exidx_end = .;
-    } >FLASH
+    *(.ARM.exidx*)
+    __exidx_end = .;
+  } >FLASH
 
   .ARM.attributes : { *(.ARM.attributes) } > FLASH
 
@@ -79,8 +78,8 @@ SECTIONS
   .fini_array :
   {
     PROVIDE_HIDDEN (__fini_array_start = .);
-    KEEP (*(.fini_array*))
     KEEP (*(SORT(.fini_array.*)))
+    KEEP (*(.fini_array*))
     PROVIDE_HIDDEN (__fini_array_end = .);
   } >FLASH
 

@@ -108,7 +108,7 @@ static void system_clock_120m_hxtal(void);
 static void system_clock_config(void);
 
 /*!
-    \brief      setup the microcontroller system, initialize the system
+    \brief      empty SystemInit required by GD32F30x startup
     \param[in]  none
     \param[out] none
     \retval     none
@@ -117,6 +117,13 @@ void SystemInit (void)
 {
     // do nothing
 }
+
+/*!
+    \brief      setup the microcontroller system, initialize the system
+    \param[in]  none
+    \param[out] none
+    \retval     none
+*/
 void SystemClockInit (void)
 {
   /* FPU settings */

@@ -37,6 +37,7 @@ void menuManualLeveling(void)
   while (MENU_IS(menuManualLeveling))
   {
     key_num = menuKeyGetValue();
+
     switch (key_num)
     {
       case KEY_ICON_0:
@@ -94,6 +95,8 @@ void menuManualLeveling(void)
         break;
 
       case KEY_ICON_7:
+        probeHeightMove(infoSettings.level_z_raise);
+
         CLOSE_MENU();
         break;
 
@@ -104,5 +107,5 @@ void menuManualLeveling(void)
     loopProcess();
   }
 
-  saveSettings();  // Save settings
+  saveSettings();  // save settings
 }
